@@ -1,1 +1,1 @@
-# Skin-Disease-Image-Classification
+# Brain Tumor Image Classification
