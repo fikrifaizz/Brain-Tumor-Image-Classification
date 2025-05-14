@@ -76,6 +76,10 @@ Berdasarkan tujuan dari proyek yang telah dipaparkan di atas, maka berikut adala
         - Nilai hasil berada di antara 0 (tidak mirip) hingga 1 (sangat mirip).
   - ***Collaborative filtering recommendation***
 
+    Sistem rekomendasi yang berbasis penyaringan kolaboratif (collaborative filtering) adalah sistem rekomendasi yang memberikan rekomendasi item yang hampir sama dengan preferensi pengguna di masa lalu berdasarkan riwayat pengguna lain yang memiliki preferensi yang sama, misalnya berdasarkan penilaian atau rating yang telah diberikan pengguna di masa lalu. [6] Namun, teknik ini memilki kekurangan yaitu, tidak dapat memberikan rekomendasi item yang tidak memiliki riwayat penilaian/rating atau transaksi.
+
+	Menggunakan teknik collaborative filtering recommendation akan memerlukan proses penyandian (encoding) fitur-fitur yang terdapat pada dataset ke dalam bentuk indeks integer, lalu memetakannya ke dalam dataframe yang berkaitan. Kemudian akan dilakukan pembagian distribusi dataset dengan rasio tertentu untuk memisahkan data latih (training data) dan juga data uji (validation data) sebelum dilakukan tahap pemodelan.
+
     
 
 
@@ -90,3 +94,5 @@ Referensi :
 [4] Salton, G., & Buckley, C. (1988). Term-weighting approaches in automatic text retrieval. Information Processing & Management, 24(5), 513–523. https://doi.org/10.1016/0306-4573(88)90021-0
 
 [5] Manning, C. D., Raghavan, P., & Schütze, H. (2008). Introduction to Information Retrieval. Cambridge University Press.
+
+[6] A. Ajitsaria, "Build a Recommendation Engine With Collaborative Filtering", Real Python, 2019, Retrieved from: https://realpython.com/build-recommendation-engine-collaborative-filtering.
