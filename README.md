@@ -80,7 +80,51 @@ Berdasarkan tujuan dari proyek yang telah dipaparkan di atas, maka berikut adala
 
 	Menggunakan teknik collaborative filtering recommendation akan memerlukan proses penyandian (encoding) fitur-fitur yang terdapat pada dataset ke dalam bentuk indeks integer, lalu memetakannya ke dalam dataframe yang berkaitan. Kemudian akan dilakukan pembagian distribusi dataset dengan rasio tertentu untuk memisahkan data latih (training data) dan juga data uji (validation data) sebelum dilakukan tahap pemodelan.
 
-    
+## Data Understanding
+
+<img src="https://github.com/user-attachments/assets/34545728-3662-4c23-83c0-6b68108ed882" alt="Dataset Kaggle" title="Dataset Kaggle">
+
+Data yang digunakan dalam proyek ini adalah dataset yang diambil dari Kaggle Dataset. Di bawah ini adalah informasi detail tentang dataset yang digunakan.
+
+|                         | Keterangan                                                                                                                                                                         |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Sumber                  | [Kaggle Dataset: Movies & Ratings for Recommendation System](https://github.com/user-attachments/assets/59682e60-a4e3-4352-be67-626c4ca11ceb) |
+| *Usability*             | 9.41                           |
+| Lisensi                 | [CC0: Public Domain](https://creativecommons.org/publicdomain/zero/1.0/) |
+| Jenis dan Ukuran Berkas | zip (2.98 MB)                  |
+| Kategori                | Movies and TV Shows, knn       |
+
+Dalam dataset tersebut berisi dua (2) berkas `CSV` yaitu `movies.csv` dan `ratings.csv`.
+
+1. Mengecek Jumlah Data Masing-masing Atribut dari Dataset
+
+   <img width="486" alt="image" src="https://github.com/user-attachments/assets/32456857-26dd-4bf5-94ab-49ac6be3fd22" />
+
+2. Deskripsi Variabel
+
+   - Dataset Movies
+
+  	 	<img width="299" alt="image" src="https://github.com/user-attachments/assets/1814b5c2-6d30-4bab-9c81-40a0c82a4dc8" />
+
+   		- `movieID` : Nomor identifikasi unik untuk setiap film.
+   		- `title` : Judul film beserta tahun rilisnya.
+   		- `genres` : Kategori genre film.
+
+
+   - Dataset Ratings
+
+	 	<img width="330" alt="image" src="https://github.com/user-attachments/assets/c3710c5a-2a9d-44a4-bb27-2dd2b68fd863" />
+
+   		- `userId` : Identifikasi pengguna.
+     	- `movieId` : Identifikasi film.
+     	- `rating` : Nilai penilaian yang diberikan pengguna
+     	- `timestamp` : Waktu ketika rating diberikan
+3. Deskripsi Statistik
+
+	 	
+
+
+
 
 
 Referensi :
