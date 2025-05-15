@@ -94,7 +94,7 @@ Data yang digunakan dalam proyek ini adalah dataset yang diambil dari Kaggle Dat
 | Jenis dan Ukuran Berkas | zip (2.98 MB)                  |
 | Kategori                | Movies and TV Shows, knn       |
 
-Dalam dataset tersebut berisi dua (2) berkas `CSV` yaitu `movies.csv` dan `ratings.csv`.
+Dalam dataset tersebut berisi dua (2) berkas `CSV` yaitu `movies.csv` dan `ratings.csv`. Selanjutnya akan dilakukan *Exploratory Data Analysis*.
 
 1. Mengecek Jumlah Data Masing-masing Atribut dari Dataset
 
@@ -120,7 +120,57 @@ Dalam dataset tersebut berisi dua (2) berkas `CSV` yaitu `movies.csv` dan `ratin
      	- `rating` : Nilai penilaian yang diberikan pengguna
      	- `timestamp` : Waktu ketika rating diberikan
 3. Deskripsi Statistik
+	- Dataset Movies
 
+ 		<img width="442" alt="image" src="https://github.com/user-attachments/assets/9ddf166e-0998-438a-a365-916559234dcc" />
+
+   	- Dataset Ratings
+
+	  	<img width="622" alt="image" src="https://github.com/user-attachments/assets/79906c37-e7b6-4536-972d-fdd480cfe680" />
+
+4. Pengecekan Missing Value
+
+   	- Dataset Movies
+
+   		<img width="113" alt="image" src="https://github.com/user-attachments/assets/ad075bc9-b26d-426e-bd4c-940458099c48" />
+
+	- Dataset Ratings
+
+		<img width="144" alt="image" src="https://github.com/user-attachments/assets/76dd38cf-96f4-45e5-8c0c-b2f35cc08bed" />
+
+	Pada kedua dataset, tidak ditemukan nilai null.
+
+5. Analisis Fitur Genre
+
+<img src="https://github.com/user-attachments/assets/334218b1-4e97-4482-b0ff-2b45551f289b" alt="Analisis Fitur Genre" title="Analisis Fitur Genre">
+
+Berdasarkan visualisasi grafik, Genre Drama merupakan Distribusi terbanyak berdasarkan Jumlah film.
+
+6. Analisis Distribusi Rating
+
+<img src="https://github.com/user-attachments/assets/c1333a7d-e175-4366-b0cc-b3acb24a4fb9" alt="Analisis Distribusi Rating" title="Analisis Distribusi Rating">
+
+Berdasarkan visualisasi grafik, banyak users yang merating film dengan nilai 4.0
+
+## ***Data Preprocessing***
+Tahap pra-pemrosesan data atau data preprocessing merupakan tahap yang perlu diterapkan sebelum melakukan proses pemodelan. Tahap ini adalah teknik yang digunakan untuk mengubah data mentah (raw data) menjadi data yang bersih (clean data) yang siap untuk digunakan pada proses selanjutnya. Dalam kasus ini, tahap data preprocessing pada data `movies` dilakukan dengan mengekstrak tahun dari judul film, encoding genre menggunakan one-hot encoding, lalu tahap data preprocessing pada data `ratings` dilakukan dengan konversi timestamp ke `datetime`.
+1. Mengekstrak Tahun dari Judul Film pada Dataset `movies`
+
+	Melakukan ekstrak tahun dari judul film pada fitur `title` dan membuat kolom baru yaitu `year`.
+
+ 	<img width="502" alt="image" src="https://github.com/user-attachments/assets/46f02f76-5554-49f1-ac83-0f72f2151a7c" />
+
+2. One-hot encoding Genre pada data `movies`
+
+  	Memisahkan genre yang awalnya digabungkan dengan string `|` lalu dipisah dan dijadikan one-hot encoding.
+
+   	<img width="729" alt="image" src="https://github.com/user-attachments/assets/5d3a506f-a077-476a-ac0f-39428e6b2dc3" />
+
+3. 
+
+
+
+	
 	 	
 
 
