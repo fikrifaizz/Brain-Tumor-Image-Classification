@@ -162,14 +162,133 @@ Tahap pra-pemrosesan data atau data preprocessing merupakan tahap yang perlu dit
 
 2. One-hot encoding Genre pada data `movies`
 
-  	Memisahkan genre yang awalnya digabungkan dengan string `|` lalu dipisah dan dijadikan one-hot encoding.
+  	Memisahkan genre yang awalnya digabungkan dengan string `|` lalu dipisah dan dijadikan one-hot encoding. One-hot encoding ini sangat penting karena mengubah data kategorikal genre menjadi format numerik yang dapat diproses oleh algoritma machine learning untuk menentukan kemiripan antar film berdasarkan genrenya.
 
    	<img width="729" alt="image" src="https://github.com/user-attachments/assets/5d3a506f-a077-476a-ac0f-39428e6b2dc3" />
 
-3. 
+3. Konversi Timestamp ke Datetime pada data `ratings`
+
+   <img width="388" alt="image" src="https://github.com/user-attachments/assets/2ffe4b2b-8c8e-4fa3-bc69-19e4753b6d77" />
+
+   Fitur timestamp sudah dikonversikan ke tipe data `datetime`.
+
+## ***Data Preparation***
+Tahap persiapan data atau data preparation juga merupakan tahapan penting sebelum memasuki proses pengembangan model machine learning. Dalam kasus ini, tahap data preparation dilakukan dengan mengatasi missing value, mengatasi data duplikat pada data yang baru di praproses sebelumnya.
+1. Mengatasi *Missing Value*
+
+   Karena sebelumnya pada dataset movie dilakukan ekstraksi tahun dari judul film, maka akan dilakukan kembali pengecekan *missing value* karena pada judul film ada judul yang menyertakan tahun dan tidak sehingga ditakutkan adanya nilai null didalamnya.
+
+   Setelah dilakukan pengecekan *missing value*, terdapat nilai null pada fitur `year` sebanyak 13 sehingga akan dilakukan pengisian nilai null tersebut menjadi angka 0.
+
+2. Mengatasi Data Duplikat
+
+   Pada tahapan ini akan dilakukan pengecekan nilai duplikat untuk kedua data yaitu `movies` dan `ratings`, dari pengecekan terhadap dua data tersebut tidak ada nilai duplikat.
+
+3. Menggabungkan semua fitur `genre` pada Data `movies`
+
+   sebelumnya dilakukan pemisahan menggunakan one hot encoding, sehingga fitur yang terdapat nilai 1 akan digabungkan dan disatukan ke kolom baru yaitu `genres_combined`.
+
+   <img width="401" alt="image" src="https://github.com/user-attachments/assets/f4e05271-f1a3-47af-b466-3012a29c68f6" />
+
+
+## Modelling 
+Tahap selanjutnya adalah proses modeling atau membuat model machine learning yang dapat digunakan sebagai sistem rekomendasi untuk menentukan rekomendasi film yang terbaik kepada pengguna dengan beberapa algoritma sistem rekomendasi tertentu.
+1. *Content-Based Filtering Recommendation*
+
+   Sistem rekomendasi yang berbasis konten (Content-based Recommendation) adalah sistem rekomendasi yang merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Content-based filtering akan mempelajari profil minat pengguna baru berdasarkan data dari objek yang telah dinilai pengguna.
+
+   - *TF-IDF Vectorizer*
+
+     TF-IDF mengubah daftar genre film menjadi nilai numerik dengan mempertimbangkan keunikan setiap genre. Genre umum seperti Drama diberi bobot rendah, sedangkan genre langka seperti Western diberi bobot tinggi. Proses ini menciptakan "sidik jari numerik" untuk setiap film berdasarkan komposisi genrenya. Saat mencari rekomendasi, sistem membandingkan sidik jari ini menggunakan cosine similarity untuk menemukan film dengan karakteristik genre serupa, menghasilkan rekomendasi yang lebih relevan daripada pencocokan genre sederhana.
+
+     <img width="770" alt="image" src="https://github.com/user-attachments/assets/62ed276d-45e2-4123-bb15-8eb767c14a24" />
+
+     Nilai dalam tabel menunjukkan bobot TF-IDF yang mengindikasikan seberapa penting suatu genre untuk film tertentu. Semakin tinggi nilainya, semakin relevan genre tersebut untuk film itu.
+
+   - *Cosine Similarity*
+
+     Cosine similarity mengukur kedekatan antar film berdasarkan vektor TF-IDF genre mereka. Sistem menghitung sudut antara setiap pasangan vektor film dalam ruang multi-dimensi genre. Nilai mendekati 1 menunjukkan film sangat mirip dalam komposisi genre, sedangkan nilai mendekati 0 menandakan film sangat berbeda. Hasil perhitungan tersimpan dalam matriks persegi, di mana setiap sel mewakili tingkat kemiripan antara dua film. Matriks ini menjadi dasar sistem rekomendasi untuk menampilkan film-film yang paling mirip dengan film yang disukai pengguna, menciptakan rekomendasi yang relevan dan personal.
+
+     <img width="715" alt="image" src="https://github.com/user-attachments/assets/a7300aa2-8477-4de9-b5a3-a37eeae7a176" />
+
+   - Hasil *Top N Recommendation*
+
+     Hasil pengujian sistem rekomendasi dengan pendekatan content-based recommendation adalah sebagai berikut.
+
+     <img width="573" alt="image" src="https://github.com/user-attachments/assets/915bb7d1-844c-49f7-991f-95a660b9b507" />
+
+     Pada gambar di atas merupakan data berdasarkan judul film yang dipilih oleh pengguna.
+
+     <img width="758" alt="image" src="https://github.com/user-attachments/assets/78cf4406-965f-49eb-af2f-53573c97f9af" />
+
+     Dapat dilihat bahwa sistem yang telah dibangun berhasil memberikan rekomendasi beberapa judul film berdasarkan input atau masukan sebuah judul film, yaitu "Antz", dan diperoleh beberapa judul film yang berdasarkan perhitungan sistem.
+
+2. *Collaborative Filtering Recommendation*
+
+   Sistem rekomendasi penyaringan kolaboratif (Collaborative Filtering Recommendation) adalah sistem rekomendasi yang merekomendasikan item yang mirip dengan preferensi pengguna di masa lalu, misalnya berdasarkan rating yang telah diberikan oleh pengguna di masa lalu.
+
+   - *Data Preparation*
+
+     Pada tahap ini, perlu melakukan persiapan data untuk menyandikan (encode) fitur `userId` dan `movieId` ke dalam indeks integer lalu memetakan `userId` dan `movieId` ke dalam masing-masing dataframe yang berkaitan.
+
+     Diperoleh jumlah user sebesar 610, jumlah film sebesar 9724, nilai minimal rating yaitu 0.5, dan nilai maksimum rating yaitu 5.
+   - *Split Training and Validation Data*
+
+     Melakukan pembagian dataset dengan rasio 80:20, yaitu 80% untuk data latih (*training data*) dan 20% untuk data uji (*validation data*).
+
+   - *Model Development* dan Hasil
+
+     Berdasarkan model yang telah di-training, berikut adalah hasil pengujian sistem rekomendasi film dengan pendekatan collaborative filtering recommendation.
+
+     <img width="757" alt="image" src="https://github.com/user-attachments/assets/1aa5e63c-6031-4f7e-8520-9e5a0008fb75" />
+
+     Berdasarkan hasil di atas, dapat dilihat bahwa sistem akan mengambil pengguna secara acak, yaitu pengguna dengan user_id 1. Lalu akan dicari film dengan rating terbaik dari user tersebut. Kemudian sistem akan membandingan antara film dengan rating tertinggi dari user dan semua film, kecuali film yang telah dibaca tersebut, lalu akan mengurutkan film yang akan direkomendasikan berdasarkan nilai rekomendasi yang tertinggi. Dapat dilihat terdapat 5 daftar film yang direkomendasikan oleh sistem.
+     - Secrets & Lies (Prediksi Rating: 4.89)
+     - Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (Prediksi Rating: 4.87)
+     - High Noon (Prediksi Rating: 4.87)
+     - Celebration, The (Festen) (Prediksi Rating: 4.86)
+     - Touch of Evil (Prediksi Rating: 4.86)
+
+## Evaluation
+1. *Content-Based Filtering Recommendation
+
+   Pada tahap evaluasi untuk model sistem rekomendasi dengan pendekatan content-based recommendation dapat menggunakan evaluasi dengan metrik akurasi yang diperoleh dari,
+
+   $Accuracy = \frac{\sum_{i=1}^{n} RecommendedMovie_{i}}{\sum_{i=1}^{n}MovieWithSameGenres_{i}} \times 100$
+
+   Masih menggunakan data yang sama pada tahap Modeling content-based recommendation, pada proses Hasil Top-N Recommendation, yaitu judul film "Antz", akan dilakukan proses pencarian jumlah judul film dengan `movieId` yang sama. Pencarian tersebut menggunakan variabel baru yang di mana akan mengambil sebuah data film dengan genres yang sama. Hasil yang diperoleh adalah Antz memiliki jumlah film sebanyak 13 genres yang mirip.
+
+   Proses perhitungan akurasi dilakukan dengan membagi banyaknya rekomendasi film yang dihasilkan, dibagi dengan banyaknya jumlah film dengan genres yang sama, kemudian dikalikan dengan 100. Sehingga diperoleh nilai akurasi sebesar 38.46%.
+
+2. *Collaborative Filtering Recommendation*
+
+   Berdasarkan model machine learning yang sudah dibangun menggunakan embedding layer dengan Adam optimizer dan binary crossentropy loss function, metrik yang digunakan adalah Root Mean Squared Error (RMSE). Perhitungan RMSE dapat dilakukan menggunakan rumus berikut,
+
+   $RMSE = \sqrt{\frac{\sum_{i=1}^{n} (y_i - y\_pred_i)^2}{n}}$
+
+   Di mana, nilai $n$ merupakan jumlah dataset, nilai $y_i$ adalah nilai sebenarnya, dan y_pred yaitu nilai prediksinya terdahap $i$ sebagai urutan data dalam dataset.
+
+   Hasil nilai RMSE yang rendah menunjukkan bahwa variasi nilai yang dihasilkan dari model sistem rekomendasi mendekati variasi nilai observasinya. Artinya, semakin kecil nilai RMSE, maka akan semakin dekat nilai yang diprediksi dan diamati.
+
+   Berikut merupakan visualisasi hasil training dan validation error dari metrik RMSE serta training dan validation loss ke dalam grafik plot.
+
+   <img src="https://github.com/user-attachments/assets/03efb52d-8d4a-43e7-bb5f-50c7489ec5cd" alt="training dan validation loss" title="Dtraining dan validation loss">
+
+## Kesimpulan
+Kesimpulannya adalah model yang digunakan untuk melakukan rekomendasi buku berdasarkan teknik Content-based Recommendation dan teknik Collaborative Filtering Recommendation telah berhasil dibuat dan sesuai dengan preferensi pengguna. Pada collaborative filtering diperlukan data rating dari pengguna, sedangkan pada content-based filtering, data rating tidak diperlukan karena analisis sistem rekomendasi akan berdasarkan atribut genres dari masing-masing film.
 
 
 
+   
+
+
+
+
+
+     
+
+
+     
 	
 	 	
 
