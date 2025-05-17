@@ -32,13 +32,13 @@ Berdasarkan tujuan dari proyek yang telah dipaparkan di atas, maka berikut adala
    - Melakukan pengecekan nilai data yang kosong, tidak ada, ataupun null (missing value) dan menghapus data tersebut atau mengganti/mengisinya dengan suatu nilai tertentu.
    - Melakukan pengecekan data yang mungkin duplikat agar tidak akan mengganggu hasil dari pemodelan dan sistem yang telah dibangun.
    - Membuat fitur tekstual untuk TF-IDF.
-3.  Tahap pembuatan model machine learning untuk sistem rekomendasi film adalah jenis algoritma sistem rekomendasi yang terpersonalisasi atau personalized recommender system. Pembuatan model akan menggunakan dua (2) pendekatan, yaitu content-based filtering recommendation, dan pendekatan collaborative filtering recommendation.
+3.  Tahap pembuatan model machine learning untuk sistem rekomendasi fashion adalah jenis algoritma sistem rekomendasi yang terpersonalisasi atau personalized recommender system. Pembuatan model akan menggunakan dua (2) pendekatan, yaitu content-based filtering recommendation, dan pendekatan collaborative filtering recommendation.
    - ***Content-based filtering recommendation***
 
      Sistem rekomendasi yang berbasis konten (content-based filtering) merupakan sistem rekomendasi yang memberikan rekomendasi item yang hampir sama dengan item yang disukai oleh pengguna di masa lalu. Content-based filtering akan mempelajari profil minat pengguna baru berdasarkan data dari objek yang telah dinilai oleh pengguna lain sebelumnya. Pada pendekatan menggunakan content-based filtering akan menggunakan algoritma TF-IDF Vectorizer dan Cosine Similarity.
      - TF-IDF Vectorizer
 
-       TF-IDF adalah metode untuk mengubah teks menjadi vektor numerik berdasarkan seberapa penting sebuah kata terhadap sebuah dokumen dalam koleksi dokumen. Ini digunakan dalam content-based filtering untuk merepresentasikan fitur dari item, dalam kasus ini genre film atau deskripsi lainnya [5].
+       TF-IDF adalah metode untuk mengubah teks menjadi vektor numerik berdasarkan seberapa penting sebuah kata terhadap sebuah dokumen dalam koleksi dokumen. Ini digunakan dalam content-based filtering untuk merepresentasikan fitur dari item, dalam kasus ini fashion atau deskripsi lainnya [5].
 
        Untuk kata $t$ dalam dokumen $d$ dari kumpulan dokumen $D$:
 
@@ -62,12 +62,12 @@ Berdasarkan tujuan dari proyek yang telah dipaparkan di atas, maka berikut adala
         Cara Kerja:
        1. Pisahkan teks genres menjadi kata-kata individual.
        2. Hitung frekuensi tiap kata (TF) dalam setiap item.
-       3. Hitung IDF untuk setiap kata di seluruh koleksi film.
-       4. Kalikan TF dan IDF untuk mendapatkan bobot penting dari setiap kata di tiap film.
+       3. Hitung IDF untuk setiap kata di seluruh produk.
+       4. Kalikan TF dan IDF untuk mendapatkan bobot penting dari setiap kata di tiap produk.
 
       - Cosine Similarity
 
-        Setelah setiap item (film) direpresentasikan sebagai vektor TF-IDF, kita dapat mengukur kemiripan antar film menggunakan cosine similarity. Rumus matematisnya sebagai berikut [5]:
+        Setelah setiap produk direpresentasikan sebagai vektor TF-IDF, kita dapat mengukur kemiripan antar fashion menggunakan cosine similarity. Rumus matematisnya sebagai berikut [6]:
 
         $\text{Cosine Similarity} (A, B) = \frac{A \cdot B}{\|A\| \cdot \|B\|}$
 
@@ -79,7 +79,7 @@ Berdasarkan tujuan dari proyek yang telah dipaparkan di atas, maka berikut adala
 
     Collaborative Filtering (CF) merupakan pendekatan dalam sistem rekomendasi yang bekerja dengan menganalisis pola interaksi antar pengguna dan item tanpa bergantung pada informasi konten produk. CF berasumsi bahwa jika dua pengguna memiliki kesamaan preferensi terhadap beberapa item, maka mereka juga akan menyukai item yang belum dilihat namun disukai oleh pengguna lain yang mirip.
 
-    Seiring berkembangnya teknologi, pendekatan ini telah mengalami peningkatan signifikan melalui integrasi dengan Deep Learning, khususnya menggunakan jaringan saraf tiruan. Pendekatan ini disebut Neural Collaborative Filtering (NCF), yang memungkinkan sistem belajar representasi vektor (embedding) dari pengguna dan produk untuk memodelkan hubungan kompleks secara non-linear. Model matematis yang digunakan sebagai berikut [6]:
+    Seiring berkembangnya teknologi, pendekatan ini telah mengalami peningkatan signifikan melalui integrasi dengan Deep Learning, khususnya menggunakan jaringan saraf tiruan. Pendekatan ini disebut Neural Collaborative Filtering (NCF), yang memungkinkan sistem belajar representasi vektor (embedding) dari pengguna dan produk untuk memodelkan hubungan kompleks secara non-linear. Model matematis yang digunakan sebagai berikut [7]:
 
     $\hat{r}_{uv} = f([u; v])$
 
@@ -113,167 +113,158 @@ Dalam dataset tersebut berisi satu (1) berkas `CSV` yaitu `fashion_products.csv`
 
 1. Mengecek Jumlah Data Masing-masing Atribut dari Dataset
 
-   <img width="486" alt="image" src="https://github.com/user-attachments/assets/32456857-26dd-4bf5-94ab-49ac6be3fd22" />
+   <img width="370" alt="image" src="https://github.com/user-attachments/assets/48d16ec2-8bcb-4e23-8c38-e00191d1724a" />
 
 2. Deskripsi Variabel
 
-   - Dataset Movies
+   <img width="351" alt="image" src="https://github.com/user-attachments/assets/8fe3d9ef-9a12-42a5-8b37-08735924147e" />
 
-  	 	<img width="299" alt="image" src="https://github.com/user-attachments/assets/1814b5c2-6d30-4bab-9c81-40a0c82a4dc8" />
+   - `User ID` : Nomor identifikasi pengguna yang berinteraksi dengan produk.
+   - `Product ID` : Nomor identifikasi unik untuk setiap produk dalam database.
+   - `Product Name` : Nama produk fashion.
+   - `Brand` : Merek produk fashion.
+   - `Category` : Kategori target pasar produk.
+   - `Price` : Harga produk dalam suatu satuan mata uang.
+   - `Rating` : Penilaian produk, tampaknya dalam skala angka desimal.
+   - `Color` : Warna Produk.
+   - `Size` : Ukuran produk.
 
-   		- `movieID` : Nomor identifikasi unik untuk setiap film.
-   		- `title` : Judul film beserta tahun rilisnya.
-   		- `genres` : Kategori genre film.
-
-
-   - Dataset Ratings
-
-	 	<img width="330" alt="image" src="https://github.com/user-attachments/assets/c3710c5a-2a9d-44a4-bb27-2dd2b68fd863" />
-
-   		- `userId` : Identifikasi pengguna.
-     	- `movieId` : Identifikasi film.
-     	- `rating` : Nilai penilaian yang diberikan pengguna
-     	- `timestamp` : Waktu ketika rating diberikan
 3. Deskripsi Statistik
-	- Dataset Movies
 
- 		<img width="442" alt="image" src="https://github.com/user-attachments/assets/9ddf166e-0998-438a-a365-916559234dcc" />
-
-   	- Dataset Ratings
-
-	  	<img width="622" alt="image" src="https://github.com/user-attachments/assets/79906c37-e7b6-4536-972d-fdd480cfe680" />
+   <img width="315" alt="image" src="https://github.com/user-attachments/assets/335ad85b-a695-4dfa-ad9e-7b1235e97781" />
 
 4. Pengecekan Missing Value
 
-   	- Dataset Movies
+   <img width="160" alt="image" src="https://github.com/user-attachments/assets/60f81658-e7ec-4573-bff0-82e743e38671" />
 
-   		<img width="113" alt="image" src="https://github.com/user-attachments/assets/ad075bc9-b26d-426e-bd4c-940458099c48" />
+   Tidak terdapat nilai null di setiap fitur.
 
-	- Dataset Ratings
+5. Analisis Distribusi Fitur Produk
 
-		<img width="144" alt="image" src="https://github.com/user-attachments/assets/76dd38cf-96f4-45e5-8c0c-b2f35cc08bed" />
+   <img width="778" alt="image" src="https://github.com/user-attachments/assets/5324e0ad-c85f-492f-a028-296fcf952482" />
 
-	Pada kedua dataset, tidak ditemukan nilai null.
-
-5. Analisis Fitur Genre
-
-<img src="https://github.com/user-attachments/assets/334218b1-4e97-4482-b0ff-2b45551f289b" alt="Analisis Fitur Genre" title="Analisis Fitur Genre">
-
-Berdasarkan visualisasi grafik, Genre Drama merupakan Distribusi terbanyak berdasarkan Jumlah film.
+   Berdasarkan visualisasi grafik, distribusi kategori produk bisa dikatakan sama rata hanya saja produk `Kids' Fashion` sedikit lebih banyak.
 
 6. Analisis Distribusi Rating
 
-<img src="https://github.com/user-attachments/assets/c1333a7d-e175-4366-b0cc-b3acb24a4fb9" alt="Analisis Distribusi Rating" title="Analisis Distribusi Rating">
+   <img width="784" alt="image" src="https://github.com/user-attachments/assets/6e8c4553-5f3e-482a-899f-a4a294024e44" />
 
-Berdasarkan visualisasi grafik, banyak users yang merating film dengan nilai 4.0
+   Berdasarkan Visualisasi Grafik, Frekuensi Rating memiliki jumlah yang hampir sama rata dengan yang tertinggi berada di antara 2.5 - 3.0 dan terendah di antara 2.0 - 2.5.
+
+7. Analisis Distribusi Brand
+
+   <img width="777" alt="image" src="https://github.com/user-attachments/assets/d0cf24d8-8745-4ffd-b34a-3079aeba2489" />
+
+   Berdasarkan visualisasi grafik, distribusi brand bisa dikatakan sama rata hanya saja produk `Nike` sedikit lebih banyak.
+
+8. Analisis Distribusi Harga
+
+   <img width="770" alt="image" src="https://github.com/user-attachments/assets/23149ac9-24b1-4210-859e-643f5c3d5eb5" />
+
+   Berdasarkan visualisasi grafik, harga pada produk memiliki rentang yang beragam namun produk terbanyak berada di nilai 90.
 
 ## ***Data Preprocessing***
-Tahap pra-pemrosesan data atau data preprocessing merupakan tahap yang perlu diterapkan sebelum melakukan proses pemodelan. Tahap ini adalah teknik yang digunakan untuk mengubah data mentah (raw data) menjadi data yang bersih (clean data) yang siap untuk digunakan pada proses selanjutnya. Dalam kasus ini, tahap data preprocessing pada data `movies` dilakukan dengan mengekstrak tahun dari judul film, encoding genre menggunakan one-hot encoding, lalu tahap data preprocessing pada data `ratings` dilakukan dengan konversi timestamp ke `datetime`.
-1. Mengekstrak Tahun dari Judul Film pada Dataset `movies`
+Tahap pra-pemrosesan data atau data preprocessing merupakan tahap yang perlu diterapkan sebelum melakukan proses pemodelan. Tahap ini adalah teknik yang digunakan untuk mengubah data mentah (raw data) menjadi data yang bersih (clean data) yang siap untuk digunakan pada proses selanjutnya. Dalam kasus ini, tahap data preprocessing pada data `fashion` dilakukan dengan mengonversi fitur rating menjadi `float` dengan 1 angka di belakang koma dan mengubah harga ke katogori.
+1. Perubahan Format Fitur `Rating`
 
-	Melakukan ekstrak tahun dari judul film pada fitur `title` dan membuat kolom baru yaitu `year`.
+   Melakukan perubahan format Fitur Rating agar sesuai dengan umumnya yaitu 1 angka dibelakang koma.
 
- 	<img width="502" alt="image" src="https://github.com/user-attachments/assets/46f02f76-5554-49f1-ac83-0f72f2151a7c" />
+   <img width="181" alt="image" src="https://github.com/user-attachments/assets/2ab75c4d-ae32-4aac-a3c9-b3001382dfd1" />
 
-2. One-hot encoding Genre pada data `movies`
+   Fitur Rating sudah diubah menjadi float dengan 1 angka di belakang koma.
 
-  	Memisahkan genre yang awalnya digabungkan dengan string `|` lalu dipisah dan dijadikan one-hot encoding. One-hot encoding ini sangat penting karena mengubah data kategorikal genre menjadi format numerik yang dapat diproses oleh algoritma machine learning untuk menentukan kemiripan antar film berdasarkan genrenya.
+2. Menambah Fitur Kategori untuk `Price`
 
-   	<img width="729" alt="image" src="https://github.com/user-attachments/assets/5d3a506f-a077-476a-ac0f-39428e6b2dc3" />
+   Karena nilai harga di dataset berkisar antara 10 hingga 100, maka akan dikelompokkan dengan rentang harga ke dalam tiga kategori: **Murah** (10-30), **Sedang** (31-70), dan **Mahal** (71-100).
 
-3. Konversi Timestamp ke Datetime pada data `ratings`
+   <img width="377" alt="image" src="https://github.com/user-attachments/assets/201a606b-ef2e-49c3-a3fb-7549634a0c27" />
 
-   <img width="388" alt="image" src="https://github.com/user-attachments/assets/2ffe4b2b-8c8e-4fa3-bc69-19e4753b6d77" />
-
-   Fitur timestamp sudah dikonversikan ke tipe data `datetime`.
+   Kategorisasi ini membantu dalam proses preprocessing untuk memudahkan analisis dan model rekomendasi.
 
 ## ***Data Preparation***
-Tahap persiapan data atau data preparation juga merupakan tahapan penting sebelum memasuki proses pengembangan model machine learning. Dalam kasus ini, tahap data preparation dilakukan dengan mengatasi missing value, mengatasi data duplikat pada data yang baru di praproses sebelumnya.
+Tahap persiapan data atau data preparation juga merupakan tahapan penting sebelum memasuki proses pengembangan model machine learning. Dalam kasus ini, tahap data preparation dilakukan dengan mengatasi missing value, mengatasi data duplikat, menggabungkan fitur yang diperlukan untuk rekomendasi.
 1. Mengatasi *Missing Value*
 
-   Karena sebelumnya pada dataset movie dilakukan ekstraksi tahun dari judul film, maka akan dilakukan kembali pengecekan *missing value* karena pada judul film ada judul yang menyertakan tahun dan tidak sehingga ditakutkan adanya nilai null didalamnya.
-
-   Setelah dilakukan pengecekan *missing value*, terdapat nilai null pada fitur `year` sebanyak 13 sehingga akan dilakukan pengisian nilai null tersebut menjadi angka 0.
+   Pada Data Understanding sudah dilakukan pengecekan *missing value* sehingga tidak didapatkan nilai null untuk setiap fitur yang ada di data.
 
 2. Mengatasi Data Duplikat
 
-   Pada tahapan ini akan dilakukan pengecekan nilai duplikat untuk kedua data yaitu `movies` dan `ratings`, dari pengecekan terhadap dua data tersebut tidak ada nilai duplikat.
+   Pada tahapan ini akan dilakukan pengecekan nilai duplikat untuk data, dari pengecekan terhadap dua data tersebut tidak ada nilai duplikat.
 
-3. Menggabungkan semua fitur `genre` pada Data `movies`
+3. Membuat fitur tekstual untuk TF-IDF
 
-   sebelumnya dilakukan pemisahan menggunakan one hot encoding, sehingga fitur yang terdapat nilai 1 akan digabungkan dan disatukan ke kolom baru yaitu `genres_combined`.
+   Salah satu teknik penting adalah penggabungan fitur-fitur kategorikal menjadi representasi tekstual yang dapat diproses oleh algoritma machine learning.
 
-   <img width="401" alt="image" src="https://github.com/user-attachments/assets/f4e05271-f1a3-47af-b466-3012a29c68f6" />
+   <img width="629" alt="image" src="https://github.com/user-attachments/assets/abcc7b4c-5fbe-435a-b5ee-0aa1298cb259" />
 
+   Penggabungan fitur seperti ini memungkinkan sistem untuk memberikan rekomendasi yang lebih personal dan kontekstual, menyesuaikan dengan preferensi pengguna terhadap karakteristik produk yang spesifik seperti kategori harga, merek favorit, kategori produk, warna, dan ukuran yang disukai.
 
 ## Modelling 
-Tahap selanjutnya adalah proses modeling atau membuat model machine learning yang dapat digunakan sebagai sistem rekomendasi untuk menentukan rekomendasi film yang terbaik kepada pengguna dengan beberapa algoritma sistem rekomendasi tertentu.
+Tahap selanjutnya adalah proses modeling atau membuat model machine learning yang dapat digunakan sebagai sistem rekomendasi untuk menentukan rekomendasi produk yang terbaik kepada pengguna dengan beberapa algoritma sistem rekomendasi tertentu.
 1. *Content-Based Filtering Recommendation*
 
    Sistem rekomendasi yang berbasis konten (Content-based Recommendation) adalah sistem rekomendasi yang merekomendasikan item yang mirip dengan item yang disukai pengguna di masa lalu. Content-based filtering akan mempelajari profil minat pengguna baru berdasarkan data dari objek yang telah dinilai pengguna.
 
    - *TF-IDF Vectorizer*
 
-     TF-IDF mengubah daftar genre film menjadi nilai numerik dengan mempertimbangkan keunikan setiap genre. Genre umum seperti Drama diberi bobot rendah, sedangkan genre langka seperti Western diberi bobot tinggi. Proses ini menciptakan "sidik jari numerik" untuk setiap film berdasarkan komposisi genrenya. Saat mencari rekomendasi, sistem membandingkan sidik jari ini menggunakan cosine similarity untuk menemukan film dengan karakteristik genre serupa, menghasilkan rekomendasi yang lebih relevan daripada pencocokan genre sederhana.
+     *TF-IDF Vectorizer* digunakan untuk mengekstrak fitur penting dari teks dan menghasilkan matriks numerik yang mencerminkan relevansi setiap kata.
 
-     <img width="770" alt="image" src="https://github.com/user-attachments/assets/62ed276d-45e2-4123-bb15-8eb767c14a24" />
+     <img width="769" alt="image" src="https://github.com/user-attachments/assets/776cbeb1-7a40-420e-98ed-670e5f711a7b" />
 
-     Nilai dalam tabel menunjukkan bobot TF-IDF yang mengindikasikan seberapa penting suatu genre untuk film tertentu. Semakin tinggi nilainya, semakin relevan genre tersebut untuk film itu.
+     Hasil dari proses vectorization ini adalah matriks TF-IDF yang menangkap frekuensi dan kepentingan setiap term dalam fitur gabungan. Matriks ini akan menjadi dasar untuk menghitung kemiripan antar produk dalam sistem rekomendasi berbasis konten.
 
    - *Cosine Similarity*
 
-     Cosine similarity mengukur kedekatan antar film berdasarkan vektor TF-IDF genre mereka. Sistem menghitung sudut antara setiap pasangan vektor film dalam ruang multi-dimensi genre. Nilai mendekati 1 menunjukkan film sangat mirip dalam komposisi genre, sedangkan nilai mendekati 0 menandakan film sangat berbeda. Hasil perhitungan tersimpan dalam matriks persegi, di mana setiap sel mewakili tingkat kemiripan antara dua film. Matriks ini menjadi dasar sistem rekomendasi untuk menampilkan film-film yang paling mirip dengan film yang disukai pengguna, menciptakan rekomendasi yang relevan dan personal.
+     Setelah mendapatkan representasi vektor TF-IDF, langkah selanjutnya adalah menghitung derajat kemiripan antar produk menggunakan cosine similarity. Pendekatan ini memungkinkan sistem untuk mengidentifikasi produk-produk dengan karakteristik serupa.
 
-     <img width="715" alt="image" src="https://github.com/user-attachments/assets/a7300aa2-8477-4de9-b5a3-a37eeae7a176" />
+     <img width="669" alt="image" src="https://github.com/user-attachments/assets/275f5da4-dc5e-4697-830f-367d6a213430" />
+
+     Matriks similarity yang dihasilkan menyediakan skor kemiripan antara setiap pasangan produk. Nilai yang lebih tinggi menunjukkan kemiripan yang lebih besar, di mana nilai 1.0 berarti produk identik berdasarkan fitur-fitur yang dianalisis. Matriks ini akan menjadi dasar untuk memberikan rekomendasi produk yang paling sesuai dengan preferensi pengguna.
+
 
    - Hasil *Top N Recommendation*
 
-     Hasil pengujian sistem rekomendasi dengan pendekatan content-based recommendation adalah sebagai berikut.
+     Untuk memulai proses rekomendasi, kita perlu memilih produk spesifik sebagai referensi. Karena terdapat banyak produk "Jeans" dalam dataset, kita memilih satu produk tertentu berdasarkan indeks untuk mendapatkan rekomendasi yang lebih tepat.
+  
+     <img width="273" alt="image" src="https://github.com/user-attachments/assets/b874b434-b42a-404f-b9fe-626f54a040bf" />
 
-     <img width="573" alt="image" src="https://github.com/user-attachments/assets/915bb7d1-844c-49f7-991f-95a660b9b507" />
+     Dengan mengidentifikasi produk referensi yang spesifik, sistem rekomendasi dapat memberikan saran yang lebih akurat berdasarkan karakteristik produk tersebut. 
 
-     Pada gambar di atas merupakan data berdasarkan judul film yang dipilih oleh pengguna.
+     <img width="770" alt="image" src="https://github.com/user-attachments/assets/4f2c2ea7-ca03-485e-b975-257dd7b1e644" />
 
-     <img width="758" alt="image" src="https://github.com/user-attachments/assets/78cf4406-965f-49eb-af2f-53573c97f9af" />
+     Dapat dilihat bahwa sistem yang telah dibangun berhasil memberikan rekomendasi beberapa produk fashion berdasarkan input atau masukan sebuah nama produk, yaitu "jeans", dan diperoleh beberapa produk fashion yang berdasarkan perhitungan sistem.
 
-     Dapat dilihat bahwa sistem yang telah dibangun berhasil memberikan rekomendasi beberapa judul film berdasarkan input atau masukan sebuah judul film, yaitu "Antz", dan diperoleh beberapa judul film yang berdasarkan perhitungan sistem.
-
-2. *Collaborative Filtering Recommendation*
+3. *Collaborative Filtering Recommendation*
 
    Sistem rekomendasi penyaringan kolaboratif (Collaborative Filtering Recommendation) adalah sistem rekomendasi yang merekomendasikan item yang mirip dengan preferensi pengguna di masa lalu, misalnya berdasarkan rating yang telah diberikan oleh pengguna di masa lalu.
 
    - *Data Preparation*
 
-     Pada tahap ini, perlu melakukan persiapan data untuk menyandikan (encode) fitur `userId` dan `movieId` ke dalam indeks integer lalu memetakan `userId` dan `movieId` ke dalam masing-masing dataframe yang berkaitan.
+     Pada tahap ini, perlu melakukan persiapan data untuk menyandikan (encode) fitur `User ID` dan `Product ID` ke dalam indeks integer lalu memetakan `User ID` dan `Product ID` ke dalam masing-masing dataframe yang berkaitan.
 
-     Diperoleh jumlah user sebesar 610, jumlah film sebesar 9724, nilai minimal rating yaitu 0.5, dan nilai maksimum rating yaitu 5.
+     Diperoleh jumlah user sebesar 100, jumlah produk sebesar 1000, nilai minimal rating yaitu 1, dan nilai maksimum rating yaitu 5.
    - *Split Training and Validation Data*
 
      Melakukan pembagian dataset dengan rasio 80:20, yaitu 80% untuk data latih (*training data*) dan 20% untuk data uji (*validation data*).
 
    - *Model Development* dan Hasil
 
-     Berdasarkan model yang telah di-training, berikut adalah hasil pengujian sistem rekomendasi film dengan pendekatan collaborative filtering recommendation.
+     Berdasarkan model yang telah di-training, berikut adalah hasil pengujian sistem rekomendasi produk dengan pendekatan collaborative filtering recommendation.
 
-     <img width="757" alt="image" src="https://github.com/user-attachments/assets/1aa5e63c-6031-4f7e-8520-9e5a0008fb75" />
+     <img width="621" alt="image" src="https://github.com/user-attachments/assets/76b86527-5836-4ef3-8108-3a99475d40e8" />
 
-     Berdasarkan hasil di atas, dapat dilihat bahwa sistem akan mengambil pengguna secara acak, yaitu pengguna dengan user_id 1. Lalu akan dicari film dengan rating terbaik dari user tersebut. Kemudian sistem akan membandingan antara film dengan rating tertinggi dari user dan semua film, kecuali film yang telah dibaca tersebut, lalu akan mengurutkan film yang akan direkomendasikan berdasarkan nilai rekomendasi yang tertinggi. Dapat dilihat terdapat 5 daftar film yang direkomendasikan oleh sistem.
-     - Secrets & Lies (Prediksi Rating: 4.89)
-     - Dr. Strangelove or: How I Learned to Stop Worrying and Love the Bomb (Prediksi Rating: 4.87)
-     - High Noon (Prediksi Rating: 4.87)
-     - Celebration, The (Festen) (Prediksi Rating: 4.86)
-     - Touch of Evil (Prediksi Rating: 4.86)
+     Berdasarkan hasil di atas, dapat dilihat bahwa bahwa model collaborative filtering berhasil mengidentifikasi preferensi pengguna 35 berdasarkan pola rating dari pengguna-pengguna lain yang memiliki selera serupa, dan memberikan rekomendasi produk yang mungkin disukai namun belum dilihat/dibeli oleh pengguna tersebut.
 
 ## Evaluation
 1. *Content-Based Filtering Recommendation
 
    Pada tahap evaluasi untuk model sistem rekomendasi dengan pendekatan content-based recommendation dapat menggunakan evaluasi dengan metrik akurasi yang diperoleh dari,
 
-   $Accuracy = \frac{\sum_{i=1}^{n} RecommendedMovie_{i}}{\sum_{i=1}^{n}MovieWithSameGenres_{i}} \times 100$
+   $Accuracy = \frac{\sum_{i=1}^{n} RecommendedProduct_{i}}{\sum_{i=1}^{n}ProductWithSamePreference_{i}} \times 100$
 
-   Masih menggunakan data yang sama pada tahap Modeling content-based recommendation, pada proses Hasil Top-N Recommendation, yaitu judul film "Antz", akan dilakukan proses pencarian jumlah judul film dengan `movieId` yang sama. Pencarian tersebut menggunakan variabel baru yang di mana akan mengambil sebuah data film dengan genres yang sama. Hasil yang diperoleh adalah Antz memiliki jumlah film sebanyak 13 genres yang mirip.
+   Masih menggunakan data yang sama pada tahap Modeling content-based recommendation, pada proses Hasil Top-N Recommendation, yaitu produk dengan nama "jeans", akan dilakukan proses pencarian jumlah produk fashion dengan `Product ID` yang sama. Pencarian tersebut menggunakan variabel baru yang di mana akan mengambil sebuah data fashion dengan preferensi yang sama. Hasil yang diperoleh adalah Jeans memiliki jumlah produk sebanyak 16 produk yang mirip.
 
-   Proses perhitungan akurasi dilakukan dengan membagi banyaknya rekomendasi film yang dihasilkan, dibagi dengan banyaknya jumlah film dengan genres yang sama, kemudian dikalikan dengan 100. Sehingga diperoleh nilai akurasi sebesar 38.46%.
+   Proses perhitungan akurasi dilakukan dengan membagi banyaknya rekomendasi fashion yang dihasilkan, dibagi dengan banyaknya jumlah fashion dengan preferensi yang sama, kemudian dikalikan dengan 100. Sehingga diperoleh nilai akurasi sebesar 32.00%.
 
 2. *Collaborative Filtering Recommendation*
 
@@ -287,12 +278,10 @@ Tahap selanjutnya adalah proses modeling atau membuat model machine learning yan
 
    Berikut merupakan visualisasi hasil training dan validation error dari metrik RMSE serta training dan validation loss ke dalam grafik plot.
 
-   <img src="https://github.com/user-attachments/assets/03efb52d-8d4a-43e7-bb5f-50c7489ec5cd" alt="training dan validation loss" title="Dtraining dan validation loss">
+   <img width="781" alt="image" src="https://github.com/user-attachments/assets/a0b32bd8-c2d1-48f0-baf6-f4bfcd182752" />
 
 ## Kesimpulan
-Kesimpulannya adalah model yang digunakan untuk melakukan rekomendasi buku berdasarkan teknik Content-based Recommendation dan teknik Collaborative Filtering Recommendation telah berhasil dibuat dan sesuai dengan preferensi pengguna. Pada collaborative filtering diperlukan data rating dari pengguna, sedangkan pada content-based filtering, data rating tidak diperlukan karena analisis sistem rekomendasi akan berdasarkan atribut genres dari masing-masing film.
-
-
+Kesimpulannya adalah model yang digunakan untuk melakukan rekomendasi produk berdasarkan teknik Content-based Recommendation dan teknik Collaborative Filtering Recommendation telah berhasil dibuat dan sesuai dengan preferensi pengguna. Pada collaborative filtering diperlukan data rating dari pengguna, sedangkan pada content-based filtering, data rating tidak diperlukan karena analisis sistem rekomendasi akan berdasarkan atribut item dari masing-masing produk.
 
 Referensi :
 
@@ -304,8 +293,10 @@ Referensi :
 
 [4] Jannach, D., Adomavicius, G., Tuzhilin, A., et al. (2016). Recommender Systems—Challenges, Insights and Research Opportunities. ACM Transactions on Intelligent Systems and Technology, 7(1), 1–34.
 
-[5]
+[5] Salton, G., & Buckley, C. (1988). Term-weighting approaches in automatic text retrieval. Information Processing & Management, 24(5), 513–523. https://doi.org/10.1016/0306-4573(88)90021-0
 
-[6] Zhang, S., Yao, L., Sun, A., & Tay, Y. (2019). Deep Learning based Recommender System: A Survey and New Perspectives. ACM Computing Surveys (CSUR), 52(1), 1–38.
+[6] Manning, C. D., Raghavan, P., & Schütze, H. (2008). Introduction to Information Retrieval. Cambridge University Press.
+
+[7] Zhang, S., Yao, L., Sun, A., & Tay, Y. (2019). Deep Learning based Recommender System: A Survey and New Perspectives. ACM Computing Surveys (CSUR), 52(1), 1–38.
 
 
